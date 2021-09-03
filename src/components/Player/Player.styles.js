@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   text-align: center;
   align-items: center;
   bottom: 0;
+  left: 0;
 
   .seekbar {
     cursor: pointer;

@@ -8,7 +8,8 @@ import { Wrapper, Content, Controls } from "./Player.styles"
 
 const Player = () => {
   const [state] = useContext(Context)
-  const [playing, setPlaying] = useState(false)
+  const [playing, setPlaying] = useState(true)
+  const [time, setTime] = useState(0)
   const audio = useRef(null)
   const seekbar = useRef(null)
   const noImage =
@@ -19,27 +20,27 @@ const Player = () => {
   }
 
   function updateTime(event) {
-    seekbar.current.value = event.currentTarget.currentTime
+    setTime(event.currentTarget.currentTime)
   }
 
   function seekAudio(event) {
     audio.current.currentTime = event.currentTarget.value
   }
 
-  function songEnded(event) {
-    setPlaying(false)
-  }
+  useEffect(() => {
+    if (audio.current === null) return
+    playing ? audio.current.play() : audio.current.pause()
+  }, [playing])
 
   useEffect(() => {
     if (audio.current === null) return
-    seekbar.current.value = 0
-    audio.current.src = state.download_links[0]
-    setPlaying(true)
-  }, [state])
-
-  useEffect(() => {
-    playing ? audio.current?.play() : audio.current?.pause()
-  }, [playing])
+    audio.current.addEventListener("ended", () => setPlaying(false))
+    audio.current.addEventListener("playing", () => setPlaying(true))
+    return () => {
+      audio.removeEventListener("ended", () => setPlaying(false))
+      audio.removeEventListener("playing")
+    }
+  }, [])
 
   if (state === undefined) return null
 
@@ -48,6 +49,7 @@ const Player = () => {
       <input
         ref={seekbar}
         type="range"
+        value={time}
         className="seekbar"
         min="0"
         onChange={seekAudio}
@@ -58,9 +60,9 @@ const Player = () => {
         <p>{state ? state.song_name : "No song playing"}</p>
         <audio
           ref={audio}
+          src={state.download_links[0]}
           autoPlay
           onTimeUpdate={updateTime}
-          onEnded={songEnded}
         />
         <Controls>
           {/* <button className="prev" /> */}
