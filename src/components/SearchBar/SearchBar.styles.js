@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 
   input {
-    width: 270px;
+    width: 280px;
     height: 30px;
     border-radius: 10px;
     padding-left: 10px;

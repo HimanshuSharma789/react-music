@@ -17,9 +17,13 @@ const App = () => {
     }
 
     const fetchSongs = async () => {
+      if (search.trim() === "") {
+        setSongs({})
+        return
+      }
       const response = await fetch(`https://saavn.me/search?song=${search}`)
       const songsData = await response.json()
-      console.log(songsData)
+      // console.log(songsData)
       setSongs(songsData)
     }
 
@@ -30,7 +34,7 @@ const App = () => {
     <div className="App">
       <PlayerProvider>
         <SearchBar setSearch={setSearch} />
-        <Catalog search={search} songs={songs} />
+        <Catalog search={search} songs={songs} showQueue={false} />
         <Player />
       </PlayerProvider>
     </div>

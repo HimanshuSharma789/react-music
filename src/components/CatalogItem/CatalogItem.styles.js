@@ -8,6 +8,13 @@ export const Wrapper = styled.div`
   height: 60px;
   cursor: pointer;
 
+  :hover {
+    border: 1px solid;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+      0 0 20px rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+  }
+
   img {
     border-radius: 10px;
     width: 60px;
@@ -26,7 +33,15 @@ export const Wrapper = styled.div`
   button {
     background: none;
     border: none;
-    margin-right: 0px;
+  }
+
+  .option {
+    display: flex;
+    margin-right: 0;
     margin-left: auto;
+  }
+
+  #addToQueue {
+    cursor: pointer;
   }
 `

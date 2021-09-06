@@ -13,8 +13,6 @@ export const Wrapper = styled.div`
   .seekbar {
     cursor: pointer;
     height: 5px;
-    /* outline: thin solid orange; */
-    /* overflow: hidden; */
     width: 300px;
   }
 `
@@ -23,7 +21,7 @@ export const Content = styled.div`
   display: flex;
   margin: 0 auto;
   align-items: center;
-  width: 320px;
+  width: 350px;
 
   img {
     margin: 8px;
@@ -40,23 +38,7 @@ export const Controls = styled.div`
   button {
     border: 0;
     background: transparent;
-    box-sizing: border-box;
-    height: 36px;
-
-    border-color: transparent transparent transparent #202020;
-    transition: 100ms all ease;
-    will-change: border-width;
     cursor: pointer;
-
-    // play state
-    border-style: solid;
-    border-width: 18px 0 18px 30px;
-
-    // paused state
-    &.pause {
-      border-style: double;
-      border-width: 0px 0 0px 30px;
-    }
 
     :focus {
       outline: none;

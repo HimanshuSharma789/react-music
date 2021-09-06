@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useRef, useState } from "react"
 import { Context } from "../../context"
+import {
+  MdPlayCircleOutline as Play,
+  MdPauseCircleOutline as Pause,
+  MdSkipNext,
+} from "react-icons/md"
 
 import { Wrapper, Content, Controls } from "./Player.styles"
 
-// play/pause
-// current time
-
 const Player = () => {
-  const [state] = useContext(Context)
+  const [{ queue, current }, setState] = useContext(Context)
   const [playing, setPlaying] = useState(false)
   const audio = useRef(null)
   const seekbar = useRef(null)
-  const noImage =
-    "https://a10.gaanacdn.com/images/gaanawebsite/albumdefaultcommonv1.jpg"
+  const quality = 1 //quality = [96, 160, 320]
+  // const noImage = "https://a10.gaanacdn.com/images/gaanawebsite/albumdefaultcommonv1.jpg"
 
   function handlePlayback(event) {
     setPlaying((playing) => !playing)
@@ -28,20 +30,26 @@ const Player = () => {
 
   function songEnded(event) {
     setPlaying(false)
+    //play next song
+    if (current < queue.length - 1)
+      setState((prevState) => ({ ...prevState, current: current + 1 }))
   }
 
   useEffect(() => {
     if (audio.current === null) return
-    seekbar.current.value = 0
-    audio.current.src = state.download_links[0]
-    setPlaying(true)
-  }, [state])
+    if (current === queue.length) return
+
+    if (audio.current.src !== queue[current].download_links[quality]) {
+      audio.current.src = queue[current].download_links[quality]
+      setPlaying(true)
+    }
+  }, [queue, current])
 
   useEffect(() => {
     playing ? audio.current?.play() : audio.current?.pause()
   }, [playing])
 
-  if (state === undefined) return null
+  if (queue.length === 0) return null
 
   return (
     <Wrapper>
@@ -51,11 +59,11 @@ const Player = () => {
         className="seekbar"
         min="0"
         onChange={seekAudio}
-        max={state.song_duration}
+        max={queue[current].song_duration}
       />
       <Content>
-        <img src={state ? state.song_image : noImage} alt="current song img" />
-        <p>{state ? state.song_name : "No song playing"}</p>
+        <img src={queue[current].song_image} alt="current song img" />
+        <p>{queue[current].song_name.substr(0,25)}</p>
         <audio
           ref={audio}
           autoPlay
@@ -63,12 +71,12 @@ const Player = () => {
           onEnded={songEnded}
         />
         <Controls>
-          {/* <button className="prev" /> */}
-          <button
-            className={`status ${playing ? "pause" : ""}`}
-            onClick={handlePlayback}
-          />
-          {/* <button className="next" /> */}
+          <button onClick={handlePlayback}>
+            {playing ? <Pause size={28} /> : <Play size={28} />}
+          </button>
+          <button onClick={songEnded}>
+            <MdSkipNext size={28} />
+          </button>
         </Controls>
       </Content>
     </Wrapper>
