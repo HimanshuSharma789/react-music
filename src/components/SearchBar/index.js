@@ -19,8 +19,8 @@ const SearchBar = ({ setSearch }) => {
   return (
     <Wrapper>
       <form onSubmit={handleSubmit}>
-        <input type="text" value={searchTerm} onChange={handleInput} />
-        <button>
+        <input type="text" value={searchTerm} onChange={handleInput} placeholder="Search Song" />
+        <button title='Search'>
           <FaSearch />
         </button>
       </form>

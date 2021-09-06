@@ -39,7 +39,6 @@ export const Controls = styled.div`
     border: 0;
     background: transparent;
     cursor: pointer;
-
     :focus {
       outline: none;
     }

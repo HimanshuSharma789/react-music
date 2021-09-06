@@ -72,10 +72,10 @@ const Player = () => {
         />
         <Controls>
           <button onClick={handlePlayback}>
-            {playing ? <Pause size={28} /> : <Play size={28} />}
+            {playing ? <Pause size={28} title='Pause'/> : <Play size={28} title='Play'/>}
           </button>
           <button onClick={songEnded}>
-            <MdSkipNext size={28} />
+            <MdSkipNext size={28} title='Next Song' />
           </button>
         </Controls>
       </Content>

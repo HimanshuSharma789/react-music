@@ -32,7 +32,7 @@ const CatalogItem = ({ song }) => {
         <p>{artist.length > 35 ? `${artist.substr(0, 35)}...` : artist}</p>
       </div>
       <div className="option">
-        <button>
+        <button title='Download'>
           <a
             href={link[0]}
             download={`${name}.mp3`}
@@ -42,7 +42,7 @@ const CatalogItem = ({ song }) => {
             <HiDownload />
           </a>
         </button>
-        <button onClick={addToQueue}>
+        <button onClick={addToQueue} title="Add to queue">
           <BiAddToQueue id="addToQueue" />
         </button>
       </div>

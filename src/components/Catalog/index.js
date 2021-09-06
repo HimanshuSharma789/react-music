@@ -10,7 +10,7 @@ const Catalog = ({ search, songs }) => {
     <Wrapper>
       <Section>
         <h3>{`Search: ${search}`}</h3>
-        <button onClick={() => setQueueSection(!queueSection)}>Queue</button>
+        <button onClick={() => setQueueSection(!queueSection)} title='Show/Hide Queue'>Queue</button>
       </Section>
 
       {queueSection && <QueueSection />}
